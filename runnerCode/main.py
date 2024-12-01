@@ -1,3 +1,6 @@
+# use astropy version 6.1.4
+# use astroquery version 0.4.8.dev9474
+
 import locationCalculator
 import SimbadQuery
 
