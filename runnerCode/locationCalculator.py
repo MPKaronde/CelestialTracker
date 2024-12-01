@@ -28,4 +28,4 @@ def getStarPos(lattitude_deg, longitude_deg, ra_deg, dec_deg):
 
     # alt gets altitude info
     # az gets azimuth info (cardinal direction)
-    return [star_altaz.alt.deg, star_altaz.az.deg]
+    return [float(star_altaz.alt.deg), float(star_altaz.az.deg)]
