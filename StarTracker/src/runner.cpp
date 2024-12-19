@@ -86,13 +86,11 @@ int getAzimuth()
 }
 
 // point to given coordinates
-boolean pointInDirection(double targetAzimuth, double targetPitch)
+boolean pointInDirection(double targetYaw, double targetPitch)
 {
     boolean done = true;
 
-    // move to appropriate yaw
-    int currentAzimuth = getAzimuth();
-    if (!rotateYawByDegrees(targetAzimuth - currentAzimuth))
+    if (!rotateYawByDegrees(targetYaw - currentYaw))
     {
         done = false;
     }
@@ -109,10 +107,12 @@ boolean pointInDirection(double targetAzimuth, double targetPitch)
 void commands()
 {
     String in = Serial.readString();
+    Serial.println("go");
 
     // rotate yaw by degrees
     if (in.equals("y"))
     {
+        Serial.println("recognized");
         String amt = Serial.readString();
         double deg = amt.toDouble();
         rotateYawByDegrees(deg);
@@ -121,6 +121,7 @@ void commands()
     // rotate pitch by degrees
     else if (in.equals("p"))
     {
+        Serial.println("recognized");
         String amt = Serial.readString();
         double deg = amt.toDouble();
         rotatePitchByDegrees(deg);
@@ -129,11 +130,12 @@ void commands()
     // point in direction
     else if (in.equals("pid"))
     {
+        Serial.println("recognized");
         String sec = Serial.readString();
-        double azimuth = sec.toDouble();
+        double yaw = sec.toDouble();
         sec = Serial.readString();
         double pitch = sec.toDouble();
-        pointInDirection(azimuth, pitch);
+        pointInDirection(yaw, pitch);
     }
 
     // command not recognized
