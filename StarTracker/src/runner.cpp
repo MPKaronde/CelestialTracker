@@ -106,12 +106,44 @@ boolean pointInDirection(double targetAzimuth, double targetPitch)
     return done;
 }
 
-boolean done = false;
+void commands()
+{
+    String in = Serial.readString();
+
+    // rotate yaw by degrees
+    if (in.equals("y"))
+    {
+        String amt = Serial.readString();
+        double deg = amt.toDouble();
+        rotateYawByDegrees(deg);
+    }
+
+    // rotate pitch by degrees
+    else if (in.equals("p"))
+    {
+        String amt = Serial.readString();
+        double deg = amt.toDouble();
+        rotatePitchByDegrees(deg);
+    }
+
+    // point in direction
+    else if (in.equals("pid"))
+    {
+        String sec = Serial.readString();
+        double azimuth = sec.toDouble();
+        sec = Serial.readString();
+        double pitch = sec.toDouble();
+        pointInDirection(azimuth, pitch);
+    }
+
+    // command not recognized
+    else
+    {
+        Serial.println("ERROR: unknown command");
+    }
+}
+
 void loop()
 {
-    if (!done)
-    {
-        rotatePitchByDegrees(180);
-        done = true;
-    }
+    commands();
 }
