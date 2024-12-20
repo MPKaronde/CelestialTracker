@@ -138,6 +138,23 @@ void commands()
         pointInDirection(yaw, pitch);
     }
 
+    // zero axis
+    else if (in.equals("z"))
+    {
+        Serial.println("recognized");
+        zeroAxis();
+    }
+
+    // print debug output
+    else if (in.equals("d"))
+    {
+        Serial.print("current pitch: ");
+        Serial.println(currentPitch);
+        Serial.print("currentYaw: ");
+        Serial.println(currentYaw);
+        delay(5000);
+    }
+
     // command not recognized
     else
     {
