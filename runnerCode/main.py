@@ -102,21 +102,36 @@ def pointToStar():
     pitchAngle = pos[0]
     yawAngle = pos[1]
 
+    # if yawAngle:
+    #     yawAngle = yawAngle
+    # elif yawAngle < 90:
+    #     yawAngle = 90 - yawAngle
+    # else:
+    #     yawAngle = 0
+
     # decide to rotate with negative direction if out of bounds
-    if pos[1] > 180:
-        yawAngle = pos[1] - 360
+    # if pos[1] > 180:
+    #     yawAngle = pos[1] - 360
 
     pointInDirection(yawAngle, pitchAngle)
 
 
 # asks user for star and points to it
+# assumes machine is already centered to horziontal and north
 def starLoop():
+
+    # tell the machine to zero itself wherever it is
+    writeToSerial("z")
+
     going = True
     while going:
-        pointToStar
+        pointToStar()
         cont = input("Another star (yes / no)? :: ")
         if cont == "no":
             going = False
 
     # reset machine so you it doesnt need reset manually each time
     pointInDirection(0, 0)
+
+
+starLoop()
