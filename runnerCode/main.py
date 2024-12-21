@@ -7,14 +7,14 @@ import SimbadQuery
 import serial
 import time
 
-# Serial setup/open
-serialRead = serial.Serial(
-    port="\\\\.\\COM3",
-    baudrate=9600,
-    bytesize=8,
-    timeout=2,
-    stopbits=serial.STOPBITS_ONE,
-)
+# # Serial setup/open
+# serialRead = serial.Serial(
+#     port="\\\\.\\COM3",
+#     baudrate=9600,
+#     bytesize=8,
+#     timeout=2,
+#     stopbits=serial.STOPBITS_ONE,
+# )
 
 WAIT_TIME = 0.35
 time.sleep(WAIT_TIME * 4)
@@ -47,7 +47,7 @@ def inputAngle():
 
 
 # uses pointInDirection method on arduino code
-def pointPointInDirection(yaw, pitch):
+def pointInDirection(yaw, pitch):
     time.sleep(WAIT_TIME)
     writeToSerial("pid")
 
@@ -82,7 +82,41 @@ def userMovementLoop():
     while True:
         yaw = input("give me yaw :: ")
         pitch = input("give me pitch :: ")
-        pointPointInDirection(yaw, pitch)
+        pointInDirection(yaw, pitch)
         end = input("done yet yes/no :: ")
         if end == "yes":
             go = False
+
+
+# works on the asumption that startracker is already zerod to north and horizontal
+def pointToStar():
+    # item 0 is angle off horizon
+    # item 1 is angle measured clockwise from north
+    pos = inputAngle()
+
+    # star is below what the machine can point to
+    if pos[0] < -60:
+        print("Out of machine bounds")
+        return
+
+    pitchAngle = pos[0]
+    yawAngle = pos[1]
+
+    # decide to rotate with negative direction if out of bounds
+    if pos[1] > 180:
+        yawAngle = pos[1] - 360
+
+    pointInDirection(yawAngle, pitchAngle)
+
+
+# asks user for star and points to it
+def starLoop():
+    going = True
+    while going:
+        pointToStar
+        cont = input("Another star (yes / no)? :: ")
+        if cont == "no":
+            going = False
+
+    # reset machine so you it doesnt need reset manually each time
+    pointInDirection(0, 0)
