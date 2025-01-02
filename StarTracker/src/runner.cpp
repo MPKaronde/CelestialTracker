@@ -5,8 +5,8 @@
 #define HALFSTEP 4
 
 // (1 / 1.8) Steps per degree for motor * gear ratio
-double YAW_STEPS_PER_DEGREE = 2.2;   //(1 / 1.8) * (30 / 120);
-double PITCH_STEPS_PER_DEGREE = 2.1; //(1 / 1.8) * (30 / 110);
+double YAW_STEPS_PER_DEGREE = 4.6 / 2.0;    //(1 / 1.8) * (30 / 120);
+double PITCH_STEPS_PER_DEGREE = 4.45 / 2.0; //(1 / 1.8) * (30 / 110);
 
 // Hardware
 AccelStepper pitchMotor(HALFSTEP, 8, 9, 10, 11);

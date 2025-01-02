@@ -9,7 +9,7 @@ import time
 
 # Serial setup/open
 serialRead = serial.Serial(
-    port="\\\\.\\COM3",
+    port="\\\\.\\COM4",
     baudrate=9600,
     bytesize=8,
     timeout=2,
@@ -55,7 +55,7 @@ def pointInDirection(yaw, pitch):
     # so wont run if just 0 is there
     time.sleep(WAIT_TIME * 5)
     if yaw == 0:
-        writeToSerial("")
+        writeToSerial("0.0000")
     else:
         writeToSerial(str(yaw))
     time.sleep(WAIT_TIME * 5)
@@ -102,18 +102,8 @@ def pointToStar():
     pitchAngle = pos[0]
     yawAngle = pos[1]
 
-    # if yawAngle:
-    #     yawAngle = yawAngle
-    # elif yawAngle < 90:
-    #     yawAngle = 90 - yawAngle
-    # else:
-    #     yawAngle = 0
-
-    # decide to rotate with negative direction if out of bounds
-    # if pos[1] > 180:
-    #     yawAngle = pos[1] - 360
-
     pointInDirection(yawAngle, pitchAngle)
+    time.sleep(WAIT_TIME * 20)
 
 
 # asks user for star and points to it
