@@ -100,7 +100,7 @@ def pointToStar():
         return
 
     pitchAngle = pos[0]
-    yawAngle = pos[1]
+    yawAngle = -pos[1]
 
     pointInDirection(yawAngle, pitchAngle)
     time.sleep(WAIT_TIME * 20)
